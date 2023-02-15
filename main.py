@@ -15,12 +15,12 @@ def sub_key_n(key, n):
     lower_byte_name_primes = 255 & NAME_PRIMES[n]
     return lower_byte_key ^ lower_byte_name_primes
 
-
+# sub_key and input_data should both be ints
 def f(sub_key, input_data):
     return sub_key ^ input_data
 
 
-# input_data, key, rounds are all ints
+# input_data and key ashould both be ints
 def feistel_struct(feistel_input, key):
     # calculate left and right halves of the input data
     input_left_half = feistel_input >> 8
@@ -37,7 +37,7 @@ def feistel_struct(feistel_input, key):
     return final_left | input_left_half
 
 
-# input data, key, nonce, counter, and feistel_rounds are all ints
+# input data, key, nonce, and counter are are all ints
 def encrypt(input_data, key, nonce, counter):
     feistel_input = nonce ^ counter
     feistel_output = feistel_struct(feistel_input, key)
@@ -50,9 +50,14 @@ if __name__ == "__main__":
     # Error checking user input...
     #
 
-    nonce_as_str = input().strip()
-    key_as_str = input().strip()
-    message_as_str = input().strip()
+    user_input = input().split()
+    nonce_as_str = user_input[0]
+    key_as_str = user_input[1]
+    message_as_str = user_input[2]
+    # NOTE: If grading on Windows, you may need to comment out the 4 lines above and uncomment the 3 lines below.
+    # nonce_as_str = input().strip()
+    # key_as_str = input().strip()
+    # message_as_str = input().strip()
 
     # check for invalid nonce/key string lengths
     if len(nonce_as_str) != 4 or len(key_as_str) != 4:
